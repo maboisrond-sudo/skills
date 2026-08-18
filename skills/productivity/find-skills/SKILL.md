@@ -1,22 +1,25 @@
 ---
 name: find-skills
-description: Helps users discover and install agent skills when they ask questions like "how do I do X", "find a skill for X", "is there a skill that can...", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.
+description: Searches the external skills.sh ecosystem for a third-party skill when the user explicitly asks to find, search for, or install a skill for some capability that this repo's own skills don't cover. Surfaces install commands for the user to review and run themselves — never runs an install unattended.
 ---
 
 # Find Skills
 
-This skill helps you discover and install skills from the open agent skills ecosystem.
+This skill helps you search the open skills.sh ecosystem for a third-party skill, and evaluate it before anything gets installed.
 
 ## When to Use This Skill
 
-Use this skill when the user:
+Use this skill when the user explicitly:
 
-- Asks "how do I do X" where X might be a common task with an existing skill
 - Says "find a skill for X" or "is there a skill for X"
-- Asks "can you do X" where X is a specialized capability
-- Expresses interest in extending agent capabilities
-- Wants to search for tools, templates, or workflows
-- Mentions they wish they had help with a specific domain (design, testing, deployment, etc.)
+- Asks you to search skills.sh, or to install a specific skill package
+- Says they want to extend their agent with a new capability and asks you to look for one
+
+This is for **narrow, explicit** skill-discovery requests — not a catch-all for "how do I do X" or "can you help with X", which are just ordinary requests to help with X directly.
+
+## Check this repo first
+
+Before searching externally, check whether a skill already in this repo covers the need — run the `/ask-matt` skill for the map of what exists here. Don't reach for an external package to duplicate something this repo's own bucket structure already provides.
 
 ## What is the Skills CLI?
 
@@ -45,6 +48,7 @@ When a user asks for help with something, identify:
 Before running a CLI search, check the [skills.sh leaderboard](https://skills.sh/) to see if a well-known skill already exists for the domain. The leaderboard ranks skills by total installs, surfacing the most popular and battle-tested options.
 
 For example, top skills for web development include:
+
 - `vercel-labs/agent-skills` — React, Next.js, web design (100K+ installs each)
 - `anthropics/skills` — Frontend design, document processing (100K+ installs)
 
@@ -58,9 +62,9 @@ npx skills find [query] [--owner <owner>]
 
 For example:
 
-- User asks "how do I make my React app faster?" → `npx skills find react performance`
-- User asks "can you help me with PR reviews?" → `npx skills find pr review`
-- User asks "I need to create a changelog" → `npx skills find changelog`
+- User asks "find me a skill for React performance" → `npx skills find react performance`
+- User asks "is there a skill for PR reviews?" → `npx skills find pr review`
+- User asks "find a skill for changelogs" → `npx skills find changelog`
 
 ### Step 4: Verify Quality Before Recommending
 
@@ -76,7 +80,7 @@ When you find relevant skills, present them to the user with:
 
 1. The skill name and what it does
 2. The install count and source
-3. The install command they can run
+3. The exact install command
 4. A link to learn more at skills.sh
 
 Example response:
@@ -92,29 +96,23 @@ npx skills add vercel-labs/agent-skills@react-best-practices
 Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 ```
 
-### Step 6: Offer to Install
+### Step 6: Never Install Unattended
 
-If the user wants to proceed, you can install the skill for them:
-
-```bash
-npx skills add <owner/repo@skill> -g -y
-```
-
-The `-g` flag installs globally (user-level) and `-y` skips confirmation prompts.
+Show the exact command and let the user run it themselves, or ask an explicit yes/no before running it in this session. Never pass `-y` (skips confirmation) — the user should always see and confirm what's about to be added. Only include `-g` (global install) if the user explicitly asked for a global install; it's a bigger blast radius than an install into a single project, since it changes what's available across every project on the machine.
 
 ## Common Skill Categories
 
 When searching, consider these common categories:
 
-| Category        | Example Queries                          |
-| --------------- | ---------------------------------------- |
-| Web Development | react, nextjs, typescript, css, tailwind |
-| Testing         | testing, jest, playwright, e2e           |
-| DevOps          | deploy, docker, kubernetes, ci-cd        |
-| Documentation   | docs, readme, changelog, api-docs        |
-| Code Quality    | review, lint, refactor, best-practices   |
-| Design          | ui, ux, design-system, accessibility     |
-| Productivity    | workflow, automation, git                |
+| Category         | Example Queries                          |
+| ----------------- | ----------------------------------------- |
+| Web Development   | react, nextjs, typescript, css, tailwind  |
+| Testing           | testing, jest, playwright, e2e            |
+| DevOps            | deploy, docker, kubernetes, ci-cd         |
+| Documentation     | docs, readme, changelog, api-docs         |
+| Code Quality      | review, lint, refactor, best-practices    |
+| Design            | ui, ux, design-system, accessibility      |
+| Productivity      | workflow, automation, git                 |
 
 ## Tips for Effective Searches
 

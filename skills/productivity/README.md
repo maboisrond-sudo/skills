@@ -15,4 +15,5 @@ Reachable only when you type them (`disable-model-invocation: true`).
 
 Model- or user-reachable (rich trigger phrasing so the model can reach for them).
 
+- **[find-skills](./find-skills/SKILL.md)** — Search the external skills.sh ecosystem for a third-party skill and evaluate it before installing.
 - **[grilling](./grilling/SKILL.md)** — Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved.
