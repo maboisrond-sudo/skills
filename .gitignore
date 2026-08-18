@@ -1,1 +1,6 @@
 node_modules
+
+# Local skills.sh CLI installs and state (personal try-outs, not part of the curated skills/ tree)
+/.agents/skills/
+/.claude/
+/skills-lock.json
