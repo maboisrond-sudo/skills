@@ -182,4 +182,5 @@ General workflow tools, not code-specific.
 
 **Model-invoked**
 
+- **[find-skills](./skills/productivity/find-skills/SKILL.md)** — Search the external skills.sh ecosystem for a third-party skill and evaluate it before installing.
 - **[grilling](./skills/productivity/grilling/SKILL.md)** — Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved. The reusable loop behind `grill-me` and `grill-with-docs`.
