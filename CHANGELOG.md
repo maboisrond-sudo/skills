@@ -1,5 +1,33 @@
 # mattpocock-skills
 
+## 1.2.0
+
+### Minor Changes
+
+- [#488](https://github.com/mattpocock/skills/pull/488) [`cdec9f6`](https://github.com/mattpocock/skills/commit/cdec9f6eb24dbfe606e3ad9b3eb457ba09210b85) Thanks [@mattpocock](https://github.com/mattpocock)! - Reword how the **`prototype`** skill handles its artifacts around a single idea: **the prototype is a primary source**. Rather than being deleted once it's answered its question, the prototype is captured as runnable evidence on a throwaway branch (`prototype/<name>`) out of main, with a context pointer to it left on the implementation issue — so the main branch keeps only the validated decision while the exploration stays findable. The answer (verdict + question) is still captured durably in an issue/ADR/commit.
+
+- [`85d478f`](https://github.com/mattpocock/skills/commit/85d478f5c3352f444fab0e7bbce71ec0524947fc) Thanks [@claude](https://github.com/claude)! - Add two new engineering skills:
+
+  - **`/superpower`** (user-invoked) — get grilled on a single, session-sized task and leave with a short confirmed plan (goal, steps, open risks) before writing any code. The lightweight sibling of `/grill-with-docs` → `/to-spec` for work that doesn't need a paper trail.
+  - **`/context7`** (model-invoked) — fetch current, version-accurate library documentation through the Context7 MCP tools (`resolve-library-id`, `get-library-docs`) instead of relying on stale training data, falling back to a direct docs fetch when those tools aren't available.
+
+  Both are wired into the top-level and `engineering/` READMEs, `.claude-plugin/plugin.json`, `ask-matt`, and have docs pages under `docs/engineering/`.
+
+### Patch Changes
+
+- [#502](https://github.com/mattpocock/skills/pull/502) [`44eed54`](https://github.com/mattpocock/skills/commit/44eed545186ffd0263e8004867750b80cfddd215) Thanks [@mattpocock](https://github.com/mattpocock)! - Make `/setup-matt-pocock-skills` friendlier and align the local-markdown tracker with the current spec.
+
+  - **Triage labels** are now asked about only when the `triage` skill is installed, and then as a single recommended-yes question ("keep the default triage labels?") instead of an override interrogation. When `triage` isn't installed, the section — and `docs/agents/triage-labels.md` — are skipped.
+  - **External PRs as a request surface** is no longer a setup question. The GitHub/GitLab templates still carry the flag, defaulted off; a user can flip it in `docs/agents/issue-tracker.md` later.
+  - **Domain docs** default to single-context without asking; multi-context is only offered when the repo shows monorepo signals.
+  - **Local-markdown tickets** are now one file per ticket under `.scratch/<feature>/issues/<NN>-<slug>.md` — never a single combined `tickets.md`. `/to-tickets` and the local issue-tracker template now agree, and the spec file is `spec.md` (not `PRD.md`) to match `/to-spec`.
+
+  Docs pages for `setup-matt-pocock-skills` and `to-tickets` re-synced.
+
+- [`10be659`](https://github.com/mattpocock/skills/commit/10be6598ae18028d9573890e478e8702f881b922) Thanks [@claude](https://github.com/claude)! - Add `scripts/validate-skills.js` (`npm run validate`), which checks the structural invariants `CLAUDE.md` documents: every promoted skill (`engineering/`, `productivity/`) is listed, under the right User-invoked/Model-invoked group, in the top-level README, its bucket README, and `.claude-plugin/plugin.json`, and has a docs page with the required Quickstart/Source/sections; non-promoted skills are absent from all three; and every README link resolves. Wired into a new `pull_request` CI workflow (`.github/workflows/validate.yml`).
+
+  Fixed the pre-existing gaps it surfaced: `implement` was missing from `skills/engineering/README.md`, and `resolving-merge-conflicts` was missing from both READMEs and `plugin.json` entirely despite already having a docs page.
+
 ## 1.1.0
 
 ### Minor Changes
